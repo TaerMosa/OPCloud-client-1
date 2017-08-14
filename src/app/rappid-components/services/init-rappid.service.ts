@@ -79,19 +79,24 @@ export class InitRappidService {
         Result_Link: [],
         Invocation_links: [],
         Exception_links: [],
+        Relation_Links:[],
       }
     };
 
     for (let link of dialogComponentRef.instance.opmLinks) {
-      //Structrial Links
-      if (link.name == "Aggregation-Participation"
-        || link.name == "Generalization-Specialization"
-        || link.name == "Exhibition-Characterization"
-        || link.name == "Classification-Instantiation"
-        || link.name == "Unidirectional_Relation"
-        || link.name == "Bidirectional_Relation") {
+
+      // Relation Links
+      if(link.name =="Unidirectional_Relation" || link.name =="Bidirectional_Relation"){
+          dialogComponentRef.instance.Relation_Links.push(link)}
+     //Structrial Links
+        else if(link.name =="Aggregation-Participation"
+        || link.name =="Generalization-Specialization"
+        || link.name =="Exhibition-Characterization"
+        || link.name =="Classification-Instantiation"
+      ) {
 
         dialogComponentRef.instance.Structural_Links.push(link);
+
       }
       //Agent Links
       else if (link.name == "Agent" || link.name == "Event_Agent" || link.name == "Condition_Agent") {
@@ -123,8 +128,8 @@ export class InitRappidService {
         dialogComponentRef.instance.Exception_links.push(link);
       }
     }
-
     this.dialog$.next(dialogComponentRef);
+
     return dialogComponentRef;
   }
 

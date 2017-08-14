@@ -7,16 +7,31 @@ import { Tab } from './tab';
 @Component({
   selector: 'tabs',
   styles: [`
-
+  
+  .tabmenu {
+  float: right;
+  margin-right: 2px;
+  color: #3a3c62; 
+  font-size: small;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 3px;
+  }
+  
+  .tabmenu:hover {
+  background-color: lightgrey;
+  }
   `],
   template:`
  
-<md-menu #appMenu="mdMenu" >
+<md-menu #menu="mdMenu" >
   <button  *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active" md-menu-item>{{tab.title}}</button>
 </md-menu>
-<button  style=" background: white ;float: right;margin-right: 2px" md-tab-nav-bar [mdMenuTriggerFor]="appMenu">
-   <label>{{title}}</label>
-</button>
+
+
+
+<div class="tabmenu" [mdMenuTriggerFor]="menu">{{title}}</div>
+
 <br>
 <div ><ng-content></ng-content></div> 
   `
@@ -30,7 +45,6 @@ export class Tabs implements AfterContentInit {
   ngAfterContentInit() {
     // get all active tabs
     let activeTabs = this.tabs.filter((tab)=>tab.active);
-
     // if there is no active tab set, activate the first
     if(activeTabs.length === 0) {
       this.selectTab(this.tabs.first);

@@ -40,6 +40,7 @@ export class DialogComponent {
   public Result_Link: Array<any> = [];
   public Exception_links: Array<any> = [];
   public Invocation_links: Array<any> = [];
+  public Relation_Links: Array<any> = [];
 
   constructor(
     @Inject(MD_DIALOG_DATA) private data: any,
@@ -49,9 +50,9 @@ export class DialogComponent {
     this.px = 0;
     this.py = 0;
     this.width = 455;
-    this.height = 370;
+    this.height = 420;
     this.width_min = 455;
-    this.height_min = 370;
+    this.height_min = 420;
     this.draggingCorner = false;
     this.draggingWindow = false;
     this.minArea = 150000;
@@ -68,6 +69,7 @@ export class DialogComponent {
     this.Result_Link = data.Result_Link;
     this.Exception_links = data.Exception_links;
     this.Invocation_links = data.Invocation_links;
+    this.Relation_Links = data.Relation_Links;
   }
 
   onClickedExit(link) {
@@ -207,6 +209,10 @@ export class DialogComponent {
   onCornerRelease(event: MouseEvent) {
     this.draggingWindow = false;
     this.draggingCorner = false;
+  }
+
+  ShowAlret(){
+    return this.noshow;
   }
 
 }

@@ -14,7 +14,9 @@
        class='dialog-corner-resize'></div>
 
   <header>
-    please choose the link kind from
+    <div *ngIf=ShowAlret() class="alert">Only one link between an object and a process is possible.</div>
+    <div *ngIf=ShowAlret() class="alert">Selecting a link will replace the current link.</div>
+    <div>please choose the link kind from
     <span [style.color]="get_style(linkSource.attributes.type)" mdTooltip="{{ linkSource.attributes.attrs.text.text }}"
           data-tooltip-position="above">
       <label>{{ linkSource.attributes.attrs.text.text }}</label>
@@ -23,7 +25,7 @@
              mdTooltip="{{ linkTarget.attributes.attrs.text.text }}"
              data-tooltip-position="above">
       <label>{{ linkTarget.attributes.attrs.text.text }}</label>
-    </span>
+      </span></div>
 
     <div class="exit-button" (click)="DefaultExit(newLink)">x</div>
 
@@ -34,11 +36,9 @@
     <!-- Structural Links -->
     <div *ngIf=check_empty(Structural_Links)>
       <md-grid-list cols="2" (click)="onClickedExit(link)" rowHeight="8:1" *ngFor="let link of Structural_Links">
-        <md-grid-tile>
+        <md-grid-tile  >
           <div class='Structrial {{link.name}}'></div>
-          <md-grid-tile>
-            <p class="oplname">{{replacename(link.name)}}</p>
-          </md-grid-tile>
+          <div class="oplname">{{replacename(link.name)}}</div>
         </md-grid-tile>
         <md-grid-tile class="item">
           <div class="opl" [innerHtml]="link.opl">{{link.opl}}</div>
@@ -46,17 +46,27 @@
       </md-grid-list>
     </div>
 
+      <!-- Relation Links -->
+      <div *ngIf=check_empty(Relation_Links)>
+        <md-grid-list  cols="2"  (click)="onClickedExit(link)"  rowHeight="8:1" *ngFor="let link of Relation_Links">
+          <md-grid-tile>
+            <div  class='Structrial {{link.name}}'></div>
+              <div class="oplname">{{replacename(link.name)}}</div>
+          </md-grid-tile>
+          <md-grid-tile class="item">
+            <div class="opl" [innerHtml]="link.opl">{{link.opl}}</div></md-grid-tile>
+        </md-grid-list >
+      </div>
+
     <!-- Result Link -->
     <div *ngIf=check_empty(Result_Link)>
       <md-grid-list cols="2" (click)="onClickedExit(link)" rowHeight="8:1" *ngFor="let link of Result_Link">
         <md-grid-tile>
           <div class='Result {{link.name}}'></div>
-          <md-grid-tile>
-            <p class="oplname">{{replacename(link.name)}}</p>
-          </md-grid-tile>
+            <div class="oplname">{{replacename(link.name)}}</div>
         </md-grid-tile>
         <md-grid-tile class="item">
-          <p class="opl" [innerHtml]="link.opl">{{link.opl}}</p>
+          <div class="opl" [innerHtml]="link.opl">{{link.opl}}</div>
         </md-grid-tile>
       </md-grid-list>
     </div>
@@ -66,88 +76,27 @@
       <md-grid-list cols="2" (click)="onClickedExit(link)" rowHeight="8:1" *ngFor="let link of Invocation_links">
         <md-grid-tile>
           <div class='Invocation {{link.name}}'></div>
-          <md-grid-tile>
-            <p class="oplname">{{replacename(link.name)}}</p>
-          </md-grid-tile>
+            <div class="oplname">{{replacename(link.name)}}</div>
         </md-grid-tile>
         <md-grid-tile class="item">
-          <p class="opl" [innerHtml]="link.opl">{{link.opl}}</p>
+          <div class="opl" [innerHtml]="link.opl">{{link.opl}}</div>
         </md-grid-tile>
       </md-grid-list>
     </div>
-    <!-- Exception Links -->
-    <!--
-<div *ngIf=check_empty(Exception_links) >
-  <md-grid-list cols="2" (click)="onClickedExit(link)" rowHeight="8:1" *ngFor="let link of Exception_links">
-    <md-grid-tile>
-      <div class='Exceptions {{link.name}}'></div>
-    </md-grid-tile>
-    <md-grid-tile class="item">
-      <p class="opl" [innerHtml]="link.opl">
-        {{link.opl}}</p
-        ></md-grid-tile>
-    <md-grid-tile>
-      <p class="oplname">
-        {{replacename(link.name)}}
-      </p
-      ></md-grid-tile>
-  </md-grid-list >
-</div>-->
-
-
-    <div *ngIf=check_empty(Exception_links)>
-      <tabs>
-        <tab [tabTitle]="'Overtime exception'">
-          <md-grid-list cols="2" (click)="onClickedExit(Exception_links[0])" rowHeight="8:1">
-            <md-grid-tile>
-              <div class='Exceptions {{Exception_links[0].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
-                  {{replacename(Exception_links[0].name)}}
-                </p>
-              </md-grid-tile>
-            </md-grid-tile>
-            <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Exception_links[0].opl">
-                {{Exception_links[0].opl}}</p>
-            </md-grid-tile>
-          </md-grid-list>
-        </tab>
-        <tab [tabTitle]="'Undertime exception'">
-          <md-grid-list cols="2" (click)="onClickedExit(Exception_links[1])" rowHeight="8:1">
-            <md-grid-tile>
-              <div class='Exceptions {{Exception_links[1].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
-                  {{replacename(Exception_links[1].name)}}
-                </p>
-              </md-grid-tile>
-            </md-grid-tile>
-            <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Exception_links[1].opl">
-                {{Exception_links[1].opl}}</p>
-            </md-grid-tile>
-          </md-grid-list>
-        </tab>
-      </tabs>
-    </div>
 
     <!-- Agents Links -->
+
     <div *ngIf=check_empty(Agent_Links)>
       <tabs>
         <tab [tabTitle]="'(wait)'">
           <md-grid-list cols="2" (click)="onClickedExit(Agent_Links[0])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Agents {{Agent_Links[0].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
-                  {{replacename(Agent_Links[0].name)}}
-                </p>
-              </md-grid-tile>
+                <div class="oplname"> {{replacename(Agent_Links[0].name)}}</div>
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Agent_Links[0].opl">
-                {{Agent_Links[0].opl}}</p>
+              <div class="opl" [innerHtml]="Agent_Links[0].opl">
+                {{Agent_Links[0].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -155,15 +104,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Agent_Links[1])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Agents {{Agent_Links[1].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Agent_Links[1].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Agent_Links[1].opl">
-                {{Agent_Links[1].opl}}</p>
+              <div class="opl" [innerHtml]="Agent_Links[1].opl">
+                {{Agent_Links[1].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -171,15 +120,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Agent_Links[2])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Agents {{Agent_Links[2].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Agent_Links[2].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Agent_Links[2].opl">
-                {{Agent_Links[2].opl}}</p>
+              <div class="opl" [innerHtml]="Agent_Links[2].opl">
+                {{Agent_Links[2].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -192,15 +141,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Instrument_Links[0])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Instruments {{Instrument_Links[0].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Instrument_Links[0].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Instrument_Links[0].opl">
-                {{Instrument_Links[0].opl}}</p>
+              <div class="opl" [innerHtml]="Instrument_Links[0].opl">
+                {{Instrument_Links[0].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -208,15 +157,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Instrument_Links[1])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Instruments {{Instrument_Links[1].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Instrument_Links[1].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Instrument_Links[1].opl">
-                {{Instrument_Links[1].opl}}</p>
+              <div class="opl" [innerHtml]="Instrument_Links[1].opl">
+                {{Instrument_Links[1].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -224,15 +173,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Instrument_Links[2])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Instruments {{Instrument_Links[2].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Instrument_Links[2].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Instrument_Links[2].opl">
-                {{Instrument_Links[2].opl}}</p>
+              <div class="opl" [innerHtml]="Instrument_Links[2].opl">
+                {{Instrument_Links[2].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -247,15 +196,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Consumption_links[0])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Consumptions {{Consumption_links[0].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Consumption_links[0].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Consumption_links[0].opl">
-                {{Consumption_links[0].opl}}</p>
+              <div class="opl" [innerHtml]="Consumption_links[0].opl">
+                {{Consumption_links[0].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -263,15 +212,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Consumption_links[1])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Consumptions {{Consumption_links[1].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Consumption_links[1].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Consumption_links[1].opl">
-                {{Consumption_links[1].opl}}</p>
+              <div class="opl" [innerHtml]="Consumption_links[1].opl">
+                {{Consumption_links[1].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -279,15 +228,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Consumption_links[2])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Consumptions {{Consumption_links[2].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Consumption_links[2].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Consumption_links[2].opl">
-                {{Consumption_links[2].opl}}</p>
+              <div class="opl" [innerHtml]="Consumption_links[2].opl">
+                {{Consumption_links[2].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -301,15 +250,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Effect_links[1])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Effects {{Effect_links[1].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Effect_links[1].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Effect_links[1].opl">
-                {{Effect_links[1].opl}}</p>
+              <div class="opl" [innerHtml]="Effect_links[1].opl">
+                {{Effect_links[1].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -317,15 +266,15 @@
           <md-grid-list cols="2" (click)="onClickedExit(Effect_links[0])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Effects {{Effect_links[0].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Effect_links[0].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Effect_links[0].opl">
-                {{Effect_links[0].opl}}</p>
+              <div class="opl" [innerHtml]="Effect_links[0].opl">
+                {{Effect_links[0].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
@@ -334,19 +283,57 @@
           <md-grid-list cols="2" (click)="onClickedExit(Effect_links[2])" rowHeight="8:1">
             <md-grid-tile>
               <div class='Effects {{Effect_links[2].name}}'></div>
-              <md-grid-tile>
-                <p class="oplname">
+
+                <div class="oplname">
                   {{replacename(Effect_links[2].name)}}
-                </p>
-              </md-grid-tile>
+                </div>
+
             </md-grid-tile>
             <md-grid-tile class="item">
-              <p class="opl" [innerHtml]="Effect_links[2].opl">
-                {{Effect_links[2].opl}}</p>
+              <div class="opl" [innerHtml]="Effect_links[2].opl">
+                {{Effect_links[2].opl}}</div>
             </md-grid-tile>
           </md-grid-list>
         </tab>
       </tabs>
     </div>
+
+    <div *ngIf=check_empty(Exception_links)>
+      <tabs>
+        <tab [tabTitle]="'Overtime exception'">
+          <md-grid-list cols="2" (click)="onClickedExit(Exception_links[0])" rowHeight="8:1">
+            <md-grid-tile>
+              <div class='Exceptions {{Exception_links[0].name}}'></div>
+
+                <div class="oplname">
+                  {{replacename(Exception_links[0].name)}}
+                </div>
+
+            </md-grid-tile>
+            <md-grid-tile class="item">
+              <div class="opl" [innerHtml]="Exception_links[0].opl">
+                {{Exception_links[0].opl}}</div>
+            </md-grid-tile>
+          </md-grid-list>
+        </tab>
+        <tab [tabTitle]="'Undertime exception'">
+          <md-grid-list cols="2" (click)="onClickedExit(Exception_links[1])" rowHeight="8:1">
+            <md-grid-tile>
+              <div class='Exceptions {{Exception_links[1].name}}'></div>
+
+                <div class="oplname">
+                  {{replacename(Exception_links[1].name)}}
+                </div>
+
+            </md-grid-tile>
+            <md-grid-tile class="item">
+              <div class="opl" [innerHtml]="Exception_links[1].opl">
+                {{Exception_links[1].opl}}</div>
+            </md-grid-tile>
+          </md-grid-list>
+        </tab>
+      </tabs>
+    </div>
+
   </div>
 </div>
