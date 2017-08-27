@@ -19,9 +19,7 @@ import { InitRappidService } from '../../../rappid-components/services/init-rapp
 
         <opcloud-rappid-toolbar></opcloud-rappid-toolbar>
         <span class="app-toolbar-filler"></span>
-
         <opc-user-status></opc-user-status>
-
       </md-toolbar>
     </div>
   `,

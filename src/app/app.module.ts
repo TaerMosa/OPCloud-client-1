@@ -28,6 +28,8 @@ import { Tab } from './dialogs/choose-link-dialog/tab';
 import { Tabs } from './dialogs/choose-link-dialog/tabs';
 import { DialogComponent } from './dialogs/choose-link-dialog/Dialog.component';
 import { OplDialogComponent } from './dialogs/opl-dialog/opl-dialog.component';
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import {UploadFile} from './FileUploader/FileUploader'
 
 @NgModule({
   declarations: [
@@ -37,7 +39,10 @@ import { OplDialogComponent } from './dialogs/opl-dialog/opl-dialog.component';
     DialogComponent,
     OplDialogComponent,
     Tabs,
-    Tab
+    Tab,
+    FileSelectDirective, /** The FileSelectDirective is what we will require , Drop is an option too*/
+    FileDropDirective,
+    UploadFile
   ],
   imports: [
     BrowserModule,
@@ -62,7 +67,8 @@ import { OplDialogComponent } from './dialogs/opl-dialog/opl-dialog.component';
     SaveModelDialogComponent,
     LoadModelDialogComponent,
     DialogComponent,
-    OplDialogComponent
+    OplDialogComponent,
+    UploadFile
   ],
   bootstrap: [AppComponent]
 })

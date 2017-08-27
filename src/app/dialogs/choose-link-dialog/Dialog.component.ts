@@ -42,6 +42,7 @@ export class DialogComponent {
   public Invocation_links: Array<any> = [];
   public Relation_Links: Array<any> = [];
 
+
   constructor(
     @Inject(MD_DIALOG_DATA) private data: any,
     public dialogRef: MdDialogRef<DialogComponent>) {

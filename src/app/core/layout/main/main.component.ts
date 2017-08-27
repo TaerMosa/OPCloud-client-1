@@ -11,29 +11,32 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'opc-main',
   template: `
-    <opc-header></opc-header>
-
+    <opc-header>
+     
+    </opc-header>
+    
     <a class="sd-tree-menu-icon" (click)="toggleSidenav()">
       <i class="material-icons app-toolbar-menu-icon">{{ sdTreeOpen ? 'chevron_left' : 'menu' }}</i>
     </a>
-
+    
     <md-sidenav-container class="opcloud-container">
-
+     
       <md-sidenav #sidenav class="sd-tree-menu"
                   [opened]="sdTreeOpen"
                   mode="side"
                   [opcResizable]="'horizontal'"
                   (opcResize)="onResize($event)">
         <opcloud-opd-hierarchy id="opd-block"></opcloud-opd-hierarchy>
-
         <opcloud-rappid-navigator [paperScroller]="paperScroller"></opcloud-rappid-navigator>
       </md-sidenav>
 
       <div class="sd-content">
 
         <div class="rappid-main rappid main-content">
-          <opcloud-rappid-paper [paper]="paper" [paperScroller]="paperScroller"></opcloud-rappid-paper>
-
+          <opcloud-rappid-paper [paper]="paper" [paperScroller]="paperScroller">
+            
+          </opcloud-rappid-paper>
+         
           <button class="inspector-button"
                   (click)="toggleInspector()"
                   *ngIf="cell$ | async"
@@ -42,10 +45,12 @@ import { Subscription } from 'rxjs/Subscription';
           </button>
           <opcloud-rappid-inspector [style.visibility]="inspectorOpen ? 'visible' : 'hidden'"
                                     [cell]="cell$ | async"></opcloud-rappid-inspector>
+          
         </div>
 
         <opc-opl-container>
           <opcloud-rappid-opl id="opl-block" [graph]="graph" [paper]="paper"></opcloud-rappid-opl>
+         
         </opc-opl-container>
 
       </div>

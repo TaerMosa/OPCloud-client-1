@@ -1,6 +1,6 @@
 const joint = require('rappid');
 
-const DictOfLinksValue = {
+export const DictOfLinksValue = {
   "Unidirectional_Relation": {src: false, dst: true, middle: false, c: false, e: false, value: {fill: 'black', d: 'M 8,34 L -12,25 L 8,16 L -12,25 L 8,34 M -12,25', 'stroke-width': 2}},
   "Uni-direct(tag)": {src: false, dst: true, middle: false, c: false, e: false, value: {fill: 'black', d: 'M 8 34 L -12 25 L 8 16 L-12 25 L 8 34 M -12,25', 'stroke-width': 2}},
   "Bidirectional_Relation": {src: true, dst: true, middle: false, c: false, e: false, value: {fill: 'black', d: 'M 8,33 L -12,25 L 8,33 L-12,25 Z', 'stroke-width': 2}},
@@ -27,6 +27,7 @@ const DictOfLinksValue = {
   "Event_Effect": {src: true, dst: true, middle: false, c: false, e: true, value: {fill: 'white', d: 'M 8,33 L -12,25 L 8,17 L0,25 L 8,33 M 0,25', 'stroke-width': 2}},
   "Event_Instrument": {src: false, dst: true, middle: false, c: false, e: true, value: {fill: 'white', d: 'M 0 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 10,0', 'stroke-width': 2}},
   "Event_Agent": {src: false, dst: true, middle: false, c: false, e: true, value: {fill: 'black', d: 'M 0 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 10,0', 'stroke-width': 2}},
+
 };
 
 function invocation(link){
@@ -225,5 +226,6 @@ export const linkDrawing = {
         conditionOrEvent(link, s);
       }
     }
-  }
+  },
+
 }

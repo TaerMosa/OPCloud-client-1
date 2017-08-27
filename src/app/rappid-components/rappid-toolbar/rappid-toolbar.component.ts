@@ -4,6 +4,8 @@ import { MdDialog } from '@angular/material';
 import { LoadModelDialogComponent } from '../../dialogs/load-model-dialog/load-model-dialog.component';
 import { CommandManagerService } from '../services/command-manager.service';
 import { InitRappidService } from '../services/init-rappid.service';
+import {UploadFile} from "../../FileUploader/FileUploader";
+const parseString = require('xml2js').parseString;
 
 const commandGroups = [
   {
@@ -17,7 +19,8 @@ const commandGroups = [
     group: 'file',
     commands: [
       { name: 'saveModel', tooltip: 'save', icon: 'save' },
-      { name: 'loadModel', tooltip: 'load', icon: 'open_in_browser' }
+      { name: 'loadModel', tooltip: 'load', icon: 'open_in_browser' },
+      { name: 'importModel', tooltip: 'import opx', icon: 'import' }
     ]
   },
   {
@@ -28,13 +31,17 @@ const commandGroups = [
       { name: 'zoomtofit', tooltip: 'zoom to fit', icon: 'zoom_out_map' },
       { name: 'zoomtodefault', tooltip: 'default zoom', icon: 'youtube_searched_for' }
     ]
-  }
+  },
+
+
+
 ];
 
 
 @Component({
   selector: 'opcloud-rappid-toolbar',
   template: `
+    
     <div class="button-row">
       <div class="button-group" *ngFor="let commandGroup of commandGroups">
         <button *ngFor="let command of commandGroup.commands"
@@ -44,19 +51,22 @@ const commandGroups = [
                 (click)="buttonClick(command)">
           <md-icon>{{command.icon}}</md-icon>
         </button>
+        
       </div>
+     
     </div>
   `,
   styleUrls: ['./rappid-toolbar.component.scss']
 })
 export class RappidToolbarComponent implements OnInit {
   graph;
+  showLoader : boolean = false;
   // modelName;
   private commandManager;
   commandGroups = commandGroups;
 
   constructor(
-    private graphService: GraphService,
+    private graphService: GraphService ,
     commandManagerService: CommandManagerService,
     private initRappidService: InitRappidService,
     private _dialog: MdDialog) {
@@ -88,6 +98,7 @@ export class RappidToolbarComponent implements OnInit {
     return this.graphService.saveGraph(this.graphService.modelObject.name, false);
   }
 
+
   saveModelAs() {
     // debugger;
     // let dialogRef = this._dialog.open(SaveModelDialogComponent);
@@ -105,10 +116,25 @@ export class RappidToolbarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
+        console.log(result);
         this.graphService.loadGraph(result);
         this.graphService.modelObject.name = result;
       }
     });
+  }
+
+  importModel(){
+    let dialogRef = this._dialog.open(UploadFile);
+    dialogRef.afterClosed().subscribe(result => {
+      let OPX_JSON;
+        parseString(result, function (err, result) {
+          OPX_JSON = result
+        });
+        this.showLoader = true;
+        this.graphService.importOpxGraph(OPX_JSON);
+        this.showLoader = false;
+    }
+    );
   }
 
   zoomin() {

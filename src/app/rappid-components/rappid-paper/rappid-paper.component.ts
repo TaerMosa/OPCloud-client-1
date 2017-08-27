@@ -1,10 +1,16 @@
 import { Component, OnInit, AfterViewInit, ViewContainerRef, ViewChild, Input } from '@angular/core';
+
+
 const joint = require('rappid');
 
 @Component({
   selector: 'opcloud-rappid-paper',
   template: `
-    <div class="paper-container" #paperContainer></div>
+    <div class="paper-container" #paperContainer>
+      
+    </div>
+    
+    
   `,
   styleUrls: ['./rappid-paper.component.scss']
 })

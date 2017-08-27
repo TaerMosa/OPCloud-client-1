@@ -23,6 +23,11 @@ const joint = require('rappid');
 // TODO: import specific lodash methods
 const _ = require('lodash');
 
+
+
+
+
+
 @Injectable()
 export class InitRappidService {
   cell$ = new BehaviorSubject(null);
@@ -61,7 +66,10 @@ export class InitRappidService {
     this.handleRemoveElement();
     // This doesn't work (the event is not caught)
     this.linkHoverEvent();
+
   }
+
+
 
   createDialog(link) {
     const dialogComponentRef = {
