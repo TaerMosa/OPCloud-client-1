@@ -1,0 +1,20 @@
+<p>Import OPX Model</p>
+<md-dialog-content>
+
+
+    <input  type="file" accept=".opx" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+
+
+  <ul *ngFor="let item of uploader.queue">
+    <li ><span>File Name : </span>{{ item.file.name }}</li>
+    <li ><span>File Size : </span>{{ item.file.size/1024/1024 | number:'.2' }} MB</li>
+  </ul>
+</md-dialog-content>
+<hr>
+<p>
+
+  <button md-raised-button  (click)="dialogRef.close(XML)">IMPORT</button>
+  <button md-raised-button  (click)="dialogRef.close()">CANCEL</button>
+</p>
+
+
